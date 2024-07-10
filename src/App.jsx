@@ -43,7 +43,7 @@ function App() {
 
   return (
     <>
-      <center className="welcome">🕓 Manage work and time 🕓</center>
+      <center className="welcome">🕓 Manage work and time</center>
       <div className="maincontainer">
         <div className="inputContainer">
           <Input type="text" value={newListData} fun={setNewListData} />
