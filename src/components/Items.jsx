@@ -6,9 +6,11 @@ export default function Items({ items, fun }) {
       <div className="items-container">
         {items.map((item, index) => (
           <div key={index} className="item">
-            <p>{item.title}</p>
-            <p>{item.date}</p>
-            <p>{item.time}</p>
+            <div className="details">
+              <p>{item.title}</p>
+              <p>DATE: {item.date}</p>
+              <p>TIME: {item.time}</p>
+            </div>
             <Button txt="Delete" color="btn red" fun={fun} index={index} />
           </div>
         ))}

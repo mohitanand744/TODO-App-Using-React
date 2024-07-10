@@ -49,7 +49,9 @@ function App() {
           <Input type="text" value={newListData} fun={setNewListData} />
           <Input type="Date" value={newDateData} fun={setNewDateData} />
           <Input type="Time" value={newTimeData} fun={setNewTimeData} />
-
+          {listData.length > 0 && (
+            <Button txt="Clear" color="btn red bottom" fun={addData} />
+          )}
           <Button txt="ADD" color="btn" fun={addData} />
         </div>
 
@@ -57,9 +59,6 @@ function App() {
 
         <Items items={listData} fun={addData} />
 
-        {listData.length > 0 && (
-          <Button txt="Clear" color="btn red bottom" fun={addData} />
-        )}
         {listData.length === 0 && <center>Update Your TODO ✅</center>}
       </div>
     </>
