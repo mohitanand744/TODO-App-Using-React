@@ -23,15 +23,15 @@ function App() {
         let ListData = newListData.current.value;
         let NewDate = newDateData.current.value;
         let NewTime = newTimeData.current.value;
-        let readyToAddData = [
+
+        setListData((listData) => [
           ...listData,
           {
             title: ListData,
             date: NewDate,
             time: NewTime,
           },
-        ];
-        setListData(readyToAddData);
+        ]);
 
         newListData.current.value = "";
         newDateData.current.value = "";

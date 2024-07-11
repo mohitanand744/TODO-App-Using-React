@@ -32,6 +32,21 @@ body {
   flex-direction: column;
 }
 
+input:nth-child(2),
+input:nth-child(3) {
+  width: 5.4rem;
+  height: 5.4rem;
+  border-bottom: 7px solid rgb(0, 255, 255);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  color: #fff;
+  background: #ffffff;
+  box-shadow: rgba(71, 71, 71, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgb(0, 225, 255) 0px 0px 18px 0px inset;
+}
+
 .maincontainer {
   position: relative;
   max-width: 80rem;
