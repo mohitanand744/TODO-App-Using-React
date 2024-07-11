@@ -1,34 +1,41 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Button from "./components/Button";
 import Items from "./components/Items";
 import Input from "./components/Input";
 
 function App() {
-  let [newListData, setNewListData] = useState("");
-  let [newDateData, setNewDateData] = useState("");
-  let [newTimeData, setNewTimeData] = useState("");
+  let newListData = useRef("");
+  let newDateData = useRef("");
+  let newTimeData = useRef("");
   let [ErrMsg, setErrMsg] = useState("");
   let [listData, setListData] = useState([]);
 
-  const addData = (txt, index) => {
+  const addData = (e, txt, index) => {
     if (txt === "ADD") {
-      if (!newListData.trim()) {
+      if (!newListData.current.value) {
         return setErrMsg("Inter Your Task");
-      } else if (!newDateData) {
+      } else if (!newDateData.current.value) {
         return setErrMsg("Inter Your Date");
-      } else if (!newTimeData) {
+      } else if (!newTimeData.current.value) {
         return setErrMsg("Inter Your Time");
       } else {
         setErrMsg("");
+        let ListData = newListData.current.value;
+        let NewDate = newDateData.current.value;
+        let NewTime = newTimeData.current.value;
         let readyToAddData = [
           ...listData,
-          { title: newListData, date: newDateData, time: newTimeData },
+          {
+            title: ListData,
+            date: NewDate,
+            time: NewTime,
+          },
         ];
         setListData(readyToAddData);
 
-        setNewDateData("");
-        setNewListData("");
-        setNewTimeData("");
+        newListData.current.value = "";
+        newDateData.current.value = "";
+        newTimeData.current.value = "";
       }
     } else if (txt === "Delete") {
       let updatedData = listData.filter((listItem, i) => {
@@ -46,9 +53,9 @@ function App() {
       <center className="welcome">🕓 Manage work and time</center>
       <div className="maincontainer">
         <div className="inputContainer">
-          <Input type="text" value={newListData} fun={setNewListData} />
-          <Input type="Date" value={newDateData} fun={setNewDateData} />
-          <Input type="Time" value={newTimeData} fun={setNewTimeData} />
+          <Input type="text" refData={newListData} />
+          <Input type="Date" refData={newDateData} />
+          <Input type="Time" refData={newTimeData} />
           {listData.length > 0 && (
             <Button txt="Clear" color="btn red bottom" fun={addData} />
           )}
