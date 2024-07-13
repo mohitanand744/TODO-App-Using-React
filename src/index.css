@@ -209,15 +209,9 @@ center {
   }
 }
 
-@media screen and (width < 598px) {
-  html {
-    font-size: 45.5%;
-  }
-}
-
 @media screen and (width < 448px) {
   html {
-    font-size: 40.5%;
+    font-size: 47.5%;
   }
 }
 @media screen and (width < 398px) {

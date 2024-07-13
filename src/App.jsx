@@ -2,11 +2,13 @@ import { useState, useRef } from "react";
 import Button from "./components/Button";
 import Items from "./components/Items";
 import Input from "./components/Input";
+import { ListDataContext } from "./contexts/listDataContext";
 
 function App() {
   let newListData = useRef("");
   let newDateData = useRef("");
   let newTimeData = useRef("");
+
   let [ErrMsg, setErrMsg] = useState("");
   let [listData, setListData] = useState([]);
 
@@ -25,12 +27,12 @@ function App() {
         let NewTime = newTimeData.current.value;
 
         setListData((listData) => [
-          ...listData,
           {
             title: ListData,
             date: NewDate,
             time: NewTime,
           },
+          ...listData,
         ]);
 
         newListData.current.value = "";
@@ -52,20 +54,25 @@ function App() {
     <>
       <center className="welcome">🕓 Manage work and time</center>
       <div className="maincontainer">
-        <div className="inputContainer">
-          <Input type="text" refData={newListData} />
-          <Input type="Date" refData={newDateData} />
-          <Input type="Time" refData={newTimeData} />
-          {listData.length > 0 && (
-            <Button txt="Clear" color="btn red bottom" fun={addData} />
-          )}
-          <Button txt="ADD" color="btn" fun={addData} />
-        </div>
+        <ListDataContext.Provider
+          value={{
+            listData,
+            fun: addData,
+          }}
+        >
+          <div className="inputContainer">
+            <Input type="text" refData={newListData} />
+            <Input type="Date" refData={newDateData} />
+            <Input type="Time" refData={newTimeData} />
+            {listData.length > 0 && (
+              <Button txt="Clear" color="btn red bottom" />
+            )}
+            <Button txt="ADD" color="btn" />
+          </div>
 
-        {ErrMsg && <h2 className="Err">{ErrMsg}</h2>}
-
-        <Items items={listData} fun={addData} />
-
+          {ErrMsg && <h2 className="Err">{ErrMsg}</h2>}
+          <Items />
+        </ListDataContext.Provider>
         {listData.length === 0 && <center>Update Your TODO ✅</center>}
       </div>
     </>
