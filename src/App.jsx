@@ -1,8 +1,31 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useReducer } from "react";
 import Button from "./components/Button";
 import Items from "./components/Items";
 import Input from "./components/Input";
 import { ListDataContext } from "./contexts/listDataContext";
+
+// pure Function
+let reducerFun = (currState, action) => {
+  let newData = currState;
+
+  if (action.type === "ADD_DATA") {
+    newData = [
+      ...currState,
+      {
+        title: action.payload.ListData,
+        date: action.payload.NewDate,
+        time: action.payload.NewTime,
+      },
+    ];
+  } else if (action.type === "DELETE_DATA") {
+    let filterData = currState.filter((data, i) => i !== action.payload.index);
+    newData = filterData;
+  } else if (action.type === "CLEAR_DATA") {
+    newData = [];
+  }
+
+  return newData;
+};
 
 function App() {
   let newListData = useRef("");
@@ -10,7 +33,7 @@ function App() {
   let newTimeData = useRef("");
 
   let [ErrMsg, setErrMsg] = useState("");
-  let [listData, setListData] = useState([]);
+  let [listData, dispatchListData] = useReducer(reducerFun, []);
 
   const addData = (e, txt, index) => {
     if (txt === "ADD") {
@@ -26,27 +49,35 @@ function App() {
         let NewDate = newDateData.current.value;
         let NewTime = newTimeData.current.value;
 
-        setListData((listData) => [
-          {
-            title: ListData,
-            date: NewDate,
-            time: NewTime,
+        let actionAddData = {
+          type: "ADD_DATA",
+          payload: {
+            ListData,
+            NewDate,
+            NewTime,
           },
-          ...listData,
-        ]);
+        };
 
+        dispatchListData(actionAddData);
         newListData.current.value = "";
         newDateData.current.value = "";
         newTimeData.current.value = "";
       }
     } else if (txt === "Delete") {
-      let updatedData = listData.filter((listItem, i) => {
-        return i !== index;
-      });
+      let actionDeleteData = {
+        type: "DELETE_DATA",
+        payload: {
+          index,
+        },
+      };
 
-      setListData(updatedData);
+      dispatchListData(actionDeleteData);
     } else if (txt === "Clear") {
-      setListData([]);
+      let actionClearData = {
+        type: "CLEAR_DATA",
+      };
+
+      dispatchListData(actionClearData);
     }
   };
 
