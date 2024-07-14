@@ -15,6 +15,7 @@ let reducerFun = (currState, action) => {
         title: action.payload.ListData,
         date: action.payload.NewDate,
         time: action.payload.NewTime,
+        taskComplete: action.payload.taskComplete,
       },
     ];
   } else if (action.type === "DELETE_DATA") {
@@ -22,8 +23,15 @@ let reducerFun = (currState, action) => {
     newData = filterData;
   } else if (action.type === "CLEAR_DATA") {
     newData = [];
+  } else if (action.type === "TOGGLE") {
+    newData = currState.map((data, i) =>
+      i === action.payload.index
+        ? { ...data, taskComplete: !data.taskComplete }
+        : data
+    );
   }
 
+  console.log(newData);
   return newData;
 };
 
@@ -55,6 +63,7 @@ function App() {
             ListData,
             NewDate,
             NewTime,
+            taskComplete: false,
           },
         };
 
@@ -78,6 +87,13 @@ function App() {
       };
 
       dispatchListData(actionClearData);
+    } else if (txt === "") {
+      dispatchListData({
+        type: "TOGGLE",
+        payload: {
+          index,
+        },
+      });
     }
   };
 

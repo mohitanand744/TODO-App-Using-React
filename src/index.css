@@ -156,6 +156,7 @@ input {
 .btn {
   width: 10rem;
   height: 40px;
+  cursor: pointer;
   border-radius: 3rem;
   -webkit-border-radius: 3rem;
   -moz-border-radius: 3rem;
@@ -201,6 +202,28 @@ center {
   flex-direction: column;
   gap: 1rem;
   padding: 0 4rem 0 0;
+}
+
+.btn-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.done {
+  width: 5rem;
+  height: 5rem;
+}
+
+.completed {
+  box-shadow: rgba(71, 71, 71, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgb(30, 255, 0) 0px 0px 15px 0px inset;
+
+  &::after {
+    content: "✅";
+  }
 }
 
 @media screen and (width < 768px) {

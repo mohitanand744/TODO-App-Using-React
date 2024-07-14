@@ -15,7 +15,14 @@ export default function Items() {
               <p>DATE: {item.date}</p>
               <p>TIME: {item.time}</p>
             </div>
-            <Button txt="Delete" color="btn red" index={index} />
+            <div className="btn-container">
+              <Button txt="Delete" color="btn red" index={index} />
+              <Button
+                txt=""
+                color={`btn done ${item.taskComplete ? "completed" : ""}`}
+                index={index}
+              />
+            </div>
           </div>
         ))}
       </div>
